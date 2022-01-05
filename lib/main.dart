@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
+import 'package:qr_cord_reader/LinkPage.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -80,25 +82,11 @@ class _QrScanViewState extends State<QrScanView> {
     );
   }
 
-  void _showAlertDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('QRコード'),
-          scrollable: true,
-          content: Text('$_url'),
-          actions: [
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+   void _moveLinkPage(String? url) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) {
+          return LinkPage(url);
+    }));
   }
 
   void _onQRViewCreated(QRViewController controller) {
@@ -106,11 +94,11 @@ class _QrScanViewState extends State<QrScanView> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) async {
-      setState(() {
+       setState(() {
         _url = scanData.code;
       });
-      // TODO 今はURLをアラート表示するだけだが、ページ遷移 + 押下可能なリンク表示まで実装
-      _showAlertDialog();
+       _moveLinkPage(_url);
+       await controller.pauseCamera();
     });
   }
 
