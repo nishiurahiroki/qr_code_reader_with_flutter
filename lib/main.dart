@@ -55,7 +55,7 @@ class _QrScanViewState extends State<QrScanView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR読み取り'),
+        title: const Text('QR読み取り'),
         centerTitle: true,
       ),
       body: _buildQrView(context),
@@ -106,7 +106,6 @@ class _QrScanViewState extends State<QrScanView> {
       this.controller = controller;
     });
     controller.scannedDataStream.listen((scanData) async {
-      print(scanData.code);
       setState(() {
         _url = scanData.code;
       });
