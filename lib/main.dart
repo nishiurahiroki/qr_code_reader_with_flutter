@@ -83,7 +83,7 @@ class _QrScanViewState extends State<QrScanView> {
   void _showAlertDialog() {
     showDialog(
       context: context,
-      builder: (_) {
+      builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('QRコード'),
           scrollable: true,
@@ -118,7 +118,7 @@ class _QrScanViewState extends State<QrScanView> {
     log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('no Permission')),
+        const SnackBar(content: Text('no Permission')),
       );
     }
   }
